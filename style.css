@@ -36,6 +36,7 @@ table,th,td{
     display: block;
     overflow: auto;
     white-space: nowrap;
+    table-layout: fixed;
 }
 
 #logout{
@@ -43,6 +44,7 @@ table,th,td{
 }
 
 .token{
+    display:block;
     max-height: inherit;
     max-width: inherit;
     width: 100px;
