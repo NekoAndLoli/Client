@@ -42,7 +42,16 @@
 
 <div id = "gameDiv" style="display: none">
     <div id ="headerDiv">
-        <button id="logout">logout</button>
+        <p id="room_info" class = "header">
+            roomId:0001
+        </p>
+        <button id="logout" onclick="logOut()">logout</button>
+        <div class="clearer"></div>
+        <div id = "tokenList">
+            <p style="float: left">Tokens: </p>
+            <img src="https://archives.bulbagarden.net/media/upload/b/bf/Dream_Great_Ball_Sprite.png" class="menuToken">
+            <img src="https://cdn-icons-png.freepik.com/512/5028/5028066.png" id="tokenBin">
+        </div>
     </div>
     <div id="content" class="row">
 
@@ -53,11 +62,13 @@
             </table>
         </div>
         <div id = "mainDiv" class="column">
-            <h3>main</h3>
             <table id="gameMap">
 
             </table>
         </div>
+    </div>
+    <div>
+
     </div>
 
 </div>

@@ -31,6 +31,11 @@ function login(userId, password, server){
             } else {
                 alert('[close] Connection morta.');
             }
+            loginDiv.style.display="block";
+            homeDiv.style.display="none";
+            gameDiv.style.display="none";
+            socket = null;
+            lastAction = "";
         }
 
         socket.onerror = function(error) {
@@ -50,6 +55,9 @@ function login(userId, password, server){
 }
 
 function initManage(){
+    manageMessage[""]=function (){
+
+    }
     manageMessage["login"] = function (reply){
         if(reply == "Success"){
             loginOk();
@@ -94,4 +102,8 @@ function initManage(){
 function loginOk(){
     loginDiv.style.display="none";
     homeDiv.style.display="block";
+}
+
+function logOut(){
+    socket.close(1000,"logout");
 }

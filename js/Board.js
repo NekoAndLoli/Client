@@ -1,4 +1,34 @@
 let dim = 50;
+
+let tokenId = 0;
+
+let tokens = [
+    "https://archives.bulbagarden.net/media/upload/7/79/Dream_Pok%C3%A9_Ball_Sprite.png",
+    "https://archives.bulbagarden.net/media/upload/b/bf/Dream_Great_Ball_Sprite.png",
+    "https://archives.bulbagarden.net/media/upload/a/a8/Dream_Ultra_Ball_Sprite.png"];
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+
+    if(ev.target.parentElement.className == "gridColumn"){
+        //move action
+    }
+    else if(ev.target.parentElement.id == "tokenList"){
+        //add action
+    }
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+
+
 function initGrid(rows,columns) {
     let grid = document.getElementById('gameMap');
     while(grid.rows.length>0){
@@ -9,11 +39,13 @@ function initGrid(rows,columns) {
         row.className = 'gridRow';
         for (let j = 0; j < columns; j++) {
             const td = row.insertCell();
+            td.ondrop = drop;
+            td.ondragover = allowDrop;
             td.className = 'gridColumn';
         }
     }
     dimCells(dim,columns);
-    addToken(0,0,'https://media.52poke.com/wiki/thumb/f/f4/Dream_%E7%B2%BE%E7%81%B5%E7%90%83_Sprite.png/109px-Dream_%E7%B2%BE%E7%81%B5%E7%90%83_Sprite.png?20211205074228')
+    addToken(0,0,tokens[0]);
 }
 
 function dimCells(dim,columns){
@@ -35,8 +67,12 @@ function addToken(row,column,tokenUrl){
     img.className = 'token';
     img.style.height = (dim)+"px";
     img.style.width = (dim)+"px";
+    img.id = "token"+tokenId;
+    img.draggable = true;
+    img.ondragstart = drag;
     grid.rows[row].cells[column].appendChild(img);
 }
 
 initGrid(10,15);
+
 

@@ -1,13 +1,16 @@
 body{
     font-family: Arial;
+    background-color: cornsilk;
 }
 table,th,td{
     border-collapse: collapse;
 }
+.row{
+    clear: both;
+}
 .row:after {
     content: "";
     display: table;
-    clear: both;
 }
 
 .column{
@@ -23,9 +26,13 @@ table,th,td{
 .gridRow{
 
 }
+#gameDiv{
+}
 #menuDiv{
     width: 20%;
-    background-color: gray;
+    border: solid 2px gray;
+    overflow-x: auto;
+    height: 500px;
 }
 #mainDiv{
 }
@@ -43,10 +50,46 @@ table,th,td{
     float: right;
 }
 
+.header{
+    float: left;
+}
+
 .token{
     display:block;
     max-height: inherit;
     max-width: inherit;
     width: 100px;
     height: 100px;
+}
+
+.menuToken{
+    float: left;
+    display:block;
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
+}
+
+#headerDiv{
+    display: block;
+}
+
+.clearer{
+    clear: both;
+}
+
+#tokenList{
+    display: block;
+    float: left;
+    width: 100%;
+    background-color: cornsilk;
+    border: gray 2px solid;
+}
+
+#tokenBin{
+    float: right;
+    display:block;
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
 }
