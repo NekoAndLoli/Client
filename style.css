@@ -30,15 +30,21 @@ table,th,td{
 }
 #menuDiv{
     width: 20%;
+}
+#playerDiv{
     border: solid 2px gray;
     overflow-x: auto;
-    height: 500px;
+    height: 400px;
+}
+#chatDiv{
+    height: 400px;
+    overflow-x: auto;
+    border: solid 2px gray;
 }
 #mainDiv{
 }
 
 #gameMap{
-    background-image: url('https://media.52poke.com/wiki/f/ff/%E9%87%91%E9%BB%83%E5%B8%82_HGSS.png');
     background-size: 100% 100%;
     display: block;
     overflow: auto;
@@ -48,6 +54,9 @@ table,th,td{
 
 #logout{
     float: right;
+}
+#username{
+    display: inline;
 }
 
 .header{
@@ -92,4 +101,17 @@ table,th,td{
     width: 50px;
     height: 50px;
     margin-left: 5px;
+}
+
+.playerCell{
+    border: gray solid 1px;
+    padding: 5px;
+}
+#playerList{
+    width: 100%;
+}
+.chatMessage{
+    padding-left: 5px;
+    border-bottom: white solid 1px;
+
 }

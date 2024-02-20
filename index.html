@@ -45,21 +45,48 @@
         <p id="room_info" class = "header">
             roomId:0001
         </p>
-        <button id="logout" onclick="logOut()">logout</button>
+        <div id="logout">
+            <p id="username">user:</p>
+            <button  onclick="logOut()">logout</button>
+        </div>
         <div class="clearer"></div>
         <div id = "tokenList">
             <p style="float: left">Tokens: </p>
-            <img src="https://archives.bulbagarden.net/media/upload/b/bf/Dream_Great_Ball_Sprite.png" class="menuToken">
-            <img src="https://cdn-icons-png.freepik.com/512/5028/5028066.png" id="tokenBin">
+            <img src="https://cdn-icons-png.freepik.com/512/5028/5028066.png" id="tokenBin" ondragover="allowDrop(event)" ondrop="dropRemove(event)">
         </div>
+        <label for="newToken">New token url:</label>
+        <input type="url" id = "newToken">
+        <button onclick="addMenuToken()">add</button><br>
+
+        <label for="newMap">New map url:</label>
+        <input type="url" id = "newMap">
+        <button onclick="changeBackGround()">set</button>
+        <p>Set grid attributes</p>
+        <form action="javascript:setGrid(newRows.value,newColumns.value,newDim.value)">
+            <label for="newRows">Rows:</label>
+            <input type="number" min="0" value="10" id="newRows" name="newRows">
+            <label for="newColumns">Columns:</label>
+            <input type="number" min="0" value="15" id="newColumns" name="newColumns">
+            <label for="newDim">CellDim(px):</label>
+            <input type="number" min="0" value="50" id="newDim" name="newDim">
+            <input type="submit" value="Submit">
+        </form>
     </div>
     <div id="content" class="row">
 
         <div id="menuDiv" class="column">
-            <h3>menu</h3>
-            <table id="playerList">
+            <h3>PlayerList</h3>
+            <div id="playerDiv">
+                <table id="playerList">
+                </table>
+            </div>
 
-            </table>
+            <h3>Chatroom</h3>
+            <div id="chatDiv">
+            </div>
+            <input type="text" id = "chatInput">
+            <button onclick="sendMessage()">send</button><br>
+
         </div>
         <div id = "mainDiv" class="column">
             <table id="gameMap">
