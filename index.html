@@ -9,22 +9,26 @@
 <div id="loginDiv">
     <h2>Login</h2>
     <form action="javascript:login(userid.value,pw.value,server.value)">
-        <label for="userid">Username:</label><br>
-        <input type="text" id="userid" name="userid"><br>
+        <label for="userid">Username*:</label><br>
+        <input type="text" id="userid" name="userid" required><br>
         <label for="pw">Password:</label><br>
-        <input type="text" id="pw" name="pw"><br>
+        <input type="password" id="pw" name="pw"><br>
         <label for="server">Server IP:</label><br>
         <input type="text" id="server" name="server"><br>
         <input type="submit" value="Submit" id="loginSubmit">
     </form>
 </div>
 
+
 <div id="homeDiv"  style="display: none">
+    <div>
+        <button  onclick="logOut()" class="logout">logout</button>
+    </div>
     <h2>Create or join a game</h2>
     <h3>Create a game</h3>
     <form action="javascript:create(roomName.value,roompw.value)">
-        <label for="roomName">Room name:</label><br>
-        <input type="text" id="roomName" name="roomName"><br>
+        <label for="roomName">Room name*:</label><br>
+        <input type="text" id="roomName" name="roomName" required value="My room"><br>
         <label for="roompw">Password:</label><br>
         <input type="text" id="roompw" name="roompw"><br>
         <input type="submit" value="Submit" id="createSubmit">
@@ -32,8 +36,8 @@
 
     <h3>join a game</h3>
     <form action="javascript:join(roomId.value,joinpw.value)">
-        <label for="roomId">Room id:</label><br>
-        <input type="text" id="roomId" name="roomId"><br>
+        <label for="roomId">Room ID*:</label><br>
+        <input type="text" id="roomId" name="roomId" required><br>
         <label for="joinpw">Password:</label><br>
         <input type="text" id="joinpw" name="joinpw"><br>
         <input type="submit" value="Submit" id="joinSubmit">
@@ -43,9 +47,8 @@
 <div id = "gameDiv" style="display: none">
     <div id ="headerDiv">
         <p id="room_info" class = "header">
-            roomId:0001
         </p>
-        <div id="logout">
+        <div class="logout">
             <p id="username">user:</p>
             <button  onclick="logOut()">logout</button>
         </div>
@@ -67,6 +70,9 @@
             <input type="number" min="0" value="10" id="newRows" name="newRows">
             <label for="newColumns">Columns:</label>
             <input type="number" min="0" value="15" id="newColumns" name="newColumns">
+            <input type="submit" value="Submit">
+        </form>
+        <form action="javascript:setDim(newDim.value)">
             <label for="newDim">CellDim(px):</label>
             <input type="number" min="0" value="50" id="newDim" name="newDim">
             <input type="submit" value="Submit">

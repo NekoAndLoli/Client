@@ -3,10 +3,6 @@ let loginDiv = document.getElementById("loginDiv");
 let homeDiv = document.getElementById("homeDiv");
 let gameDiv = document.getElementById("gameDiv");
 
-loginDiv.style.display="block";
-homeDiv.style.display="block";
-gameDiv.style.display="block";
-
 let username = "";
 let lastAction="";
 
@@ -22,15 +18,14 @@ function login(userId, password, server){
         socket = new WebSocket("ws://"+server+":5555");
         socket.onopen = function (e){
             alert("[Info] Connected to: "+server);
-            alert("sent "+userId+password);
-            socket.send("login:\n-"+userId+"\n- "+password);
+            socket.send("login:\n-"+userId+"\n-"+password);
             lastAction = "login";
         }
         socket.onclose = function (event){
             if (event.wasClean) {
-                alert(`[close] Connessione chiusa con successo, code=${event.code} reason=${event.reason}`);
+                alert(`[close] Connection closed, code=${event.code} reason=${event.reason}`);
             } else {
-                alert('[close] Connection morta.');
+                alert('[close] Connection dead.');
             }
             loginDiv.style.display="block";
             homeDiv.style.display="none";
@@ -44,10 +39,13 @@ function login(userId, password, server){
         };
 
         socket.onmessage = function(event) {
-            alert(`[message] Ricezione dati dal server: ${event.data}`);
             let string = event.data.toString();
             let data = string.substring(1);
-            manageMessage[string[0]](data);
+            try{
+                manageMessage[string[0]](data);
+            }catch (e) {
+                alert(string);
+            }
         };
     }
     else{
@@ -98,7 +96,7 @@ function initManage(){
     };
     manageMessage["s"] = function (reply){//set grid
         let strings = reply.split(" ");
-        setGrid(strings[0],strings[1],strings[2]);
+        initGrid(strings[0],strings[1]);
     };
     manageMessage["n"] = function (reply){//new player joined
         newPlayer(reply);
@@ -108,7 +106,10 @@ function initManage(){
     };
     manageMessage["i"] = function (reply){//info, information of the grid at join
         info(reply);
-    }
+    };
+    manageMessage["o"] = function (reply){
+        offline(reply);
+    };
 }
 
 function loginOk(){
@@ -119,4 +120,10 @@ function loginOk(){
 
 function logOut(){
     socket.close(1000,"logout");
+}
+
+function offline(username){
+    let player = document.getElementById("player:"+username);
+    chatMessage("[info]"+username+" has gone offline.")
+    player.remove();
 }

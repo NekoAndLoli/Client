@@ -1,4 +1,6 @@
 let dim = 50;
+let columns = 15;
+let rows = 10;
 
 let tokenId = 0;
 let menuTokenId = 0;
@@ -59,17 +61,19 @@ function dropRemove(ev) {
     }
 }
 
-function initGrid(rows,columns) {
+function initGrid(r,c) {
+    rows = r;
+    columns = c;
     let grid = document.getElementById('gameMap');
     //TODO persistency
     grid.style.backgroundImage = backgroundUrl;
     while(grid.rows.length>0){
         grid.deleteRow(0);
     }
-    for (let i = 0; i < rows; i++) {
+    for (let i = 0; i < r; i++) {
         let row = grid.insertRow();
         row.className = 'gridRow';
-        for (let j = 0; j < columns; j++) {
+        for (let j = 0; j < c; j++) {
             const td = row.insertCell();
             td.ondrop = drop;
             td.ondragover = allowDrop;
@@ -81,6 +85,11 @@ function initGrid(rows,columns) {
 
 function dimCells(dim,columns){
     let elems = document.getElementsByClassName('gridColumn');
+    for(let i =0;i<elems.length;i++){
+        elems[i].style.height=dim+'px';
+        elems[i].style.width=dim+'px';
+    }
+    elems = document.getElementsByClassName('token');
     for(let i =0;i<elems.length;i++){
         elems[i].style.height=dim+'px';
         elems[i].style.width=dim+'px';
@@ -116,8 +125,6 @@ function setTokenList(){
         listDiv.appendChild(img)
     }
 }
-initGrid(10,15);
-setTokenList();
 
 function addMenuToken(){
     let url = document.getElementById("newToken").value;
@@ -148,12 +155,8 @@ function setbackGround(url){
     gameMap.style.backgroundImage = "url('"+url+"')";
     backgroundUrl = url;
 }
-function setGrid(rows,columns,d){
-    if(d>0)dim = d;
-    //server check
-    if(true){
-        initGrid(rows,columns)
-    }
+function setGrid(rows,columns){
+    socket.send("SetGrid:\n-"+rows+"\n-"+columns);
 }
 
 function addPlayer(playerId){
@@ -162,6 +165,7 @@ function addPlayer(playerId){
     const td = row.insertCell();
     td.className = "playerCell";
     td.innerText = playerId;
+    td.id = "player:"+playerId;
 
 }
 
@@ -174,7 +178,6 @@ function sendMessage(){
 
 function moveToken(startRow,startColumn,endRow,endColumn){
     let grid = document.getElementById("gameMap");
-    alert(grid.rows[endRow].cells.length);
     grid.rows[endRow].cells[endColumn].appendChild(grid.rows[startRow].cells[startColumn].firstChild);
 }
 
@@ -193,3 +196,11 @@ function chatMessage(text){
     p.className = "chatMessage";
     document.getElementById("chatDiv").appendChild(p);
 }
+
+function setDim(d){
+    dim=d;
+    dimCells(dim,columns);
+}
+
+initGrid(rows,columns);
+setTokenList();

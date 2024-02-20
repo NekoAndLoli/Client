@@ -34,7 +34,7 @@ table,th,td{
 #playerDiv{
     border: solid 2px gray;
     overflow-x: auto;
-    height: 400px;
+    height: 200px;
 }
 #chatDiv{
     height: 400px;
@@ -52,7 +52,7 @@ table,th,td{
     table-layout: fixed;
 }
 
-#logout{
+.logout{
     float: right;
 }
 #username{

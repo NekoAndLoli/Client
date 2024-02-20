@@ -1,7 +1,6 @@
 
 
 function create(roomName, password){
-    alert("sent: " + roomName+password);
     socket.send("create:\n-"+roomName+"\n-"+password);
     lastAction = "create";
 }
@@ -23,19 +22,40 @@ function joinOk(){
     gameDiv.style.display="block";
 }
 
-function info(data){//players | tokens | background
+function freePlayers(){
+    let grid = document.getElementById('playerList');
+    while(grid.rows.length>0){
+        grid.deleteRow(0);
+    }
+}
+
+function clearChatRoom(){
+    let messages = document.getElementsByClassName("chatMessage");
+    for (let i = 0; i < messages.length; i++) {
+        messages[i].remove();
+    }
+}
+
+function info(data){//players | tokens | background | rows | columns| dm | roomName | roomId
+    let i = 0;
     let strings = data.split("|");
-    let players = strings[0].split(" ");
-    let tokens = strings[1].split(" ");
-    let background = strings[2];
-    let dm = strings[3];
-    let roomId = strings[4];
-    let roomName = strings[5];
-    alert(background);
+    let players = strings[i++].split(" ");
+    let tokens = strings[i++].split(" ");
+    let background = strings[i++];
+    let rows = strings[i++];
+    let columns = strings[i++];
+    let dm = strings[i++];
+    let roomId = strings[i++];
+    let roomName = strings[i++];
+    document.getElementById("newRows").value = rows;
+    document.getElementById("newColumns").value = columns;
+    initGrid(rows,columns);
+    freePlayers();
+    clearChatRoom();
     for (let i = 0; i < players.length; i++) {
         addPlayer(players[i]);
     }
-    if(tokens>=3){
+    if(tokens.length>=3){
         for (let i = 0; i < tokens.length; i++) {
             addToken(tokens[i++],tokens[i++],tokens[i]);
         }
@@ -44,3 +64,4 @@ function info(data){//players | tokens | background
 
     document.getElementById("room_info").innerText ="Dungeon Master:"+dm+"\nRoom name:"+roomName+ "\nRoomId:"+roomId;
 }
+
